@@ -16,7 +16,7 @@ ADMIN_ID: int = int(environ['ADMIN_ID'])
 
 
 def start(update, ctx):
-    update.message.reply_text('Hi! This is a Steam promotions notify bot.')
+    update.message.reply_text('Hi! This is a Steam promotions info bot.')
 
 
 def error(update, ctx):
@@ -48,7 +48,7 @@ def get_freebies(update, ctx):
         update.message.reply_html(line, disable_notification=True)
 
 
-def post_notify_to_channel(update, ctx):
+def post_notify_onto_channel(update, ctx):
     if update.message.from_user.id == ADMIN_ID:
         freebies = get_freebies_list()
         if isinstance(freebies, str):
@@ -65,7 +65,7 @@ def post_notify_to_channel(update, ctx):
                     .format(freebie['fullgame_appid'], plain_text(freebie['fullgame_name']))
 
             global BOT
-            BOT.send_message(chat_id='@steam_promotions', text=line, parse_mode='HTML')
+            BOT.send_message(chat_id=CHANNEL_ID, text=line, parse_mode='HTML')
 
         update.message.reply_html('OK')
 
@@ -77,7 +77,7 @@ def main():
     dp = updater.dispatcher
     dp.add_handler(CommandHandler('start', start))
     dp.add_handler(CommandHandler('get_freebies', get_freebies))
-    dp.add_handler(CommandHandler('post_notify_on_channel', post_notify_to_channel))
+    dp.add_handler(CommandHandler('post_notify_onto_channel', post_notify_onto_channel))
     dp.add_error_handler(error)
     updater.start_polling()
     updater.idle()
