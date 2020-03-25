@@ -10,15 +10,18 @@ async def get_freebies(message):
     if isinstance(freebies, str):
         await message.channel.send('Server error')
 
+    msg = ''
     for freebie in freebies:
         line = '{}\nhttps://store.steampowered.com/app/{}' \
             .format(freebie['name'], freebie['appid'])
 
         if 'is_dlc' in freebie and freebie['is_dlc']:
-            line += '\n\n(This is a DLC of {} https://store.steampowered.com/app/{})' \
+            line += '\n(This is a DLC of {} https://store.steampowered.com/app/{})' \
                 .format(freebie['fullgame_name'], freebie['fullgame_appid'])
 
-        await message.channel.send(line)
+        msg += line + '\n\n'
+
+    await message.channel.send(msg)
 
 
 def main():
