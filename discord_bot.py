@@ -16,7 +16,7 @@ async def get_freebies(message):
             .format(freebie['name'], freebie['appid'])
 
         if 'is_dlc' in freebie and freebie['is_dlc']:
-            line += '\n(This is a DLC of {} https://store.steampowered.com/app/{})' \
+            line += '  (a DLC of {}  https://store.steampowered.com/app/{})' \
                 .format(freebie['fullgame_name'], freebie['fullgame_appid'])
 
         msg += line + '\n\n'
