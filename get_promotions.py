@@ -41,7 +41,7 @@ def get_steam_app_details_by_appid(appid: str) -> Union[dict, str]:
 def get_freebies_list() -> Union[List[dict], str]:
     page_html = get_steamdb_promotions_page_html()
     currently_live_promotions_table = page_html.find('div', {'id': 'live-promotions'}) \
-        .find_next('table', {'class': 'table-products table-responsive-flex table-hover text-left'})
+        .find_next('table', {'class': 'table-products table-responsive-flex table-hover text-left table-sortable'})
     if not currently_live_promotions_table:
         return '[ERROR] Unknown HTML parsing error, can\'t find the Currently Live Promotions table'
 
