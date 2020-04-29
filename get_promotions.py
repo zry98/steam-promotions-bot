@@ -9,7 +9,7 @@ STEAMDB_PROMOTIONS_URL: str = 'https://steamdb.info/upcoming/?free'
 def get_steamdb_promotions_page_html() -> Union[BeautifulSoup, str]:
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-        'Accept-Language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7,es;q=0.6',
+        'Accept-Language': 'en-US',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
         'Cache-Control': 'no-cache'
     }
@@ -25,14 +25,14 @@ def get_steamdb_promotions_page_html() -> Union[BeautifulSoup, str]:
 def get_steam_app_details_by_appid(appid: str) -> Union[dict, str]:
     headers = {
         'Accept': 'application/json',
-        'Accept-Language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7,es;q=0.6',
+        'Accept-Language': 'en-US',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
         'Cache-Control': 'no-cache'
     }
     resp = requests.get('https://store.steampowered.com/api/appdetails/?appids=' + appid, headers=headers)
     if resp.status_code == 200 and resp.json():
         json = resp.json()
-        if json[appid] and json[appid]['success'] == True and json[appid]['data']:
+        if json[appid] and json[appid]['success'] and json[appid]['data']:
             return json[appid]['data']
     else:
         return '[ERROR] Unknown error occurred requesting Steam Store API'
